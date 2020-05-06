@@ -14,11 +14,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auths.login');
 });
 
-Route::get('/siswa', 'SiswaController@index');
-Route::post('/siswa/create', 'SiswaController@create')->name('tambah');
-Route::get('/siswa/{id}/edit', 'SiswaController@edit')->name('edit');
-Route::post('/siswa/{id}/update', 'SiswaController@update')->name('update');
-Route::get('/siswa/{id}/delete', 'SiswaController@delete')->name('delete');
+Route::get('/login', 'AuthController@login')->name('login');
+Route::post('/postlogin', 'AuthController@postlogin')->name('postLogin');
+Route::get('/logout', 'AuthController@logout')->name('logout');
+
+Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
+    Route::get('/siswa', 'SiswaController@index')->name('siswa');
+    Route::post('/siswa/create', 'SiswaController@create')->name('tambah');
+    Route::get('/siswa/{id}/edit', 'SiswaController@edit')->name('edit');
+    Route::post('/siswa/{id}/update', 'SiswaController@update')->name('update');
+    Route::get('/siswa/{id}/delete', 'SiswaController@delete')->name('delete');
+    Route::get('/siswa/{id}/profile', 'SiswaController@profile')->name('profile');
+});
+
+Route::group(['middleware' => ['auth', 'checkRole:admin,siswa']], function () {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+});

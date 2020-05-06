@@ -69,7 +69,7 @@
 
                     <body>
                         <div class="flex-center position-ref full-height">
-                            @if (Route::has('login'))
+                            <!-- @if (Route::has('login'))
                             <div class="top-right links">
                                 @auth
                                 <a href="{{ url('/home') }}">Home</a>
@@ -81,11 +81,11 @@
                                 @endif
                                 @endauth
                             </div>
-                            @endif
+                            @endif -->
 
                             <div class="content">
                                 <div class="title m-b-md">
-                                    Laravel
+                                    Dashboard
                                 </div>
 
                                 <div class="links">
